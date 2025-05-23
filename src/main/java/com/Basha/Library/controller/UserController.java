@@ -1,5 +1,9 @@
 package com.Basha.Library.controller;
 
+
+import com.Basha.Library.dto.UserDTO;
+import com.Basha.Library.service.UserService.UserService;
+import com.Basha.Library.util.Response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +16,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/insert")
-    public ResponseEntity<Response> createUser(@RequestBody UserDto dto) {
+    public ResponseEntity<Response> createUser(@RequestBody UserDTO dto) {
         return ResponseEntity.ok(userService.insert(dto));
     }
 
     @PutMapping("/update")
-    public ResponseEntity<Response> updateUser(@RequestBody UserDto dto) {
+    public ResponseEntity<Response> updateUser(@RequestBody UserDTO dto) {
         return ResponseEntity.ok(userService.update(dto));
     }
 
