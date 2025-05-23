@@ -1,0 +1,23 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /library
+
+spring:
+  application:
+    name: Practical Evaluation
+  datasource:
+    url: jdbc:mysql://localhost:3306/library?createDatabaseIfNotExist=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    show-sql: true
+
