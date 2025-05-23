@@ -34,6 +34,8 @@ public class User {
     @Column(name = "user_role", nullable = false)
     private String userRole;
 
+    private Boolean isBorrowed;
+
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

@@ -33,6 +33,9 @@ public class BorrowedBook {
     @Column(name = "due_date", nullable = false)
     private LocalDate dueDate;
 
+    @Column(name = "return_date", nullable = false)
+    private LocalDate returnDate;
+
     @Column(name = "returned", nullable = false)
     private boolean returned = false;
 

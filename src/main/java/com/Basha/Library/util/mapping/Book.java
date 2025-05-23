@@ -33,6 +33,8 @@ public class Book {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
+    private boolean available;
+
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -40,6 +42,7 @@ public class Book {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 
 }
 
