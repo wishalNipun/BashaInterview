@@ -9,4 +9,6 @@ public interface BorrowService {
     Response returnBook(BorrowDTO dto);
 
     Response getAllBorrows();
+
+    Response getBorrowsWithExtendedReturnDates();
 }

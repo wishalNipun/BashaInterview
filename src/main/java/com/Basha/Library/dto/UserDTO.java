@@ -16,6 +16,7 @@ public class UserDTO {
     private String mobileNumber;
     private String userRole;
     private String password;
+    private Boolean isBorrowed;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     public UserDTO(Long id, String name, String email, String mobileNumber, String userRole) {

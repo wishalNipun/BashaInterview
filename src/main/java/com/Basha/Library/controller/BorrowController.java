@@ -30,5 +30,8 @@ public class BorrowController {
         return ResponseEntity.ok(borrowService.getAllBorrows());
     }
 
-
+    @GetMapping("/extendedReturnDate")
+    public ResponseEntity<Response> getBorrowsWithExtendedReturnDates() {
+        return ResponseEntity.ok(borrowService.getBorrowsWithExtendedReturnDates());
+    }
 }

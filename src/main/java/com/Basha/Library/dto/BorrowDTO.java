@@ -12,7 +12,11 @@ import java.time.LocalDate;
 public class BorrowDTO {
     private Long borrowId;
     private Long userId;
+    private String name;
+    private String email;
     private Long bookId;
+    private String isbn;
+    private String bookTitle;
     private LocalDate borrowDate;
     private LocalDate returnDate;
 }

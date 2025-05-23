@@ -33,7 +33,7 @@ public class Book {
     @Column(name = "quantity", nullable = false)
     private int quantity;
 
-    private boolean available;
+    private boolean available = false;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

@@ -1,5 +1,6 @@
 package com.Basha.Library.service.UserService.impl;
 
+import com.Basha.Library.dto.LoginDTO;
 import com.Basha.Library.dto.UserDTO;
 import com.Basha.Library.repository.UserRepository;
 import com.Basha.Library.service.UserService.UserService;
@@ -29,6 +30,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setName(dto.getName());
+
         user.setEmail(dto.getEmail());
         user.setMobileNumber(dto.getMobileNumber());
         user.setUserRole(dto.getUserRole() != null ? dto.getUserRole() : "USER");
@@ -97,12 +99,14 @@ public class UserServiceImpl implements UserService {
         List<UserDTO> users = userRepository.findAll().stream().map(user -> {
             UserDTO dto = new UserDTO();
             dto.setId(user.getId());
+            dto.setName(user.getName());
             dto.setEmail(user.getEmail());
             dto.setPassword(user.getPassword());
             dto.setUserRole(user.getUserRole());
             dto.setMobileNumber(user.getMobileNumber());
             dto.setCreatedAt(user.getCreatedAt());
             dto.setUpdatedAt(user.getUpdatedAt());
+            dto.setIsBorrowed(user.getIsBorrowed());
 
             return dto;
         }).collect(Collectors.toList());
@@ -110,4 +114,22 @@ public class UserServiceImpl implements UserService {
         return new Response("200", "All users listed", Collections.singletonList(users));
 
     }
+
+    @Override
+    public Response login(LoginDTO loginDTO) {
+        Optional<User> userOpt = userRepository.findByEmail(loginDTO.getEmail());
+        if (userOpt.isEmpty()) {
+            return new Response("404", "User not found", null);
+        }
+
+        User user = userOpt.get();
+
+        //NOt Added Spring security encode
+         if (!user.getPassword().equals(loginDTO.getPassword())) {
+            return new Response("401", "Invalid credentials", null);
+        }
+
+        return new Response("200", "Login successful",null);
+    }
+
 }
