@@ -21,3 +21,31 @@ spring:
     database-platform: org.hibernate.dialect.MySQL8Dialect
     show-sql: true
 
+security:
+  allowed-credentials: true
+  allowed-origins:
+    - http://localhost:4200 #frontend Url
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - POST
+  allowed-headers:
+    - Authorization
+    - origin
+    - Content-type
+    - Accept
+    - Accept-Control-Allow-Origin
+    - Accept-Control-Allow-Header
+    - Accept-Control-Request-Method
+    - X-Xsrf-Token
+  exposed-headers:
+    - X-Xsrf-Token
+
+application:
+  jwt:
+    secretKey: basha12345#123basha12345#123basha12345#123basha12345#123
+    tokenPrefix: "Bearer "
+    tokenExp: 86400000
+

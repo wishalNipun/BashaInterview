@@ -7,6 +7,9 @@ import com.Basha.Library.service.UserService.UserService;
 import com.Basha.Library.util.Response.Response;
 import com.Basha.Library.util.mapping.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -19,6 +22,15 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Override
+    public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
+        return userRepository.findByEmail(userName)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + userName));
+    }
 
     @Override
     public Response insert(UserDTO dto) {
@@ -34,7 +46,7 @@ public class UserServiceImpl implements UserService {
         user.setEmail(dto.getEmail());
         user.setMobileNumber(dto.getMobileNumber());
         user.setUserRole(dto.getUserRole() != null ? dto.getUserRole() : "USER");
-        user.setPassword(dto.getPassword());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         userRepository.save(user);
         return new Response("201", "User created successfully", null);
@@ -56,7 +68,7 @@ public class UserServiceImpl implements UserService {
             }
             if (dto.getMobileNumber() != null) user.setMobileNumber(dto.getMobileNumber());
             if (dto.getUserRole() != null) user.setUserRole(dto.getUserRole());
-            if (dto.getPassword() != null) user.setPassword(dto.getPassword()); // TODO: encode
+            if (dto.getPassword() != null) user.setPassword(passwordEncoder.encode(dto.getPassword())); // TODO: encode
 
             userRepository.save(user);
             return new Response("200", "User updated successfully", null);
@@ -113,23 +125,6 @@ public class UserServiceImpl implements UserService {
 
         return new Response("200", "All users listed", Collections.singletonList(users));
 
-    }
-
-    @Override
-    public Response login(LoginDTO loginDTO) {
-        Optional<User> userOpt = userRepository.findByEmail(loginDTO.getEmail());
-        if (userOpt.isEmpty()) {
-            return new Response("404", "User not found", null);
-        }
-
-        User user = userOpt.get();
-
-        //NOt Added Spring security encode
-         if (!user.getPassword().equals(loginDTO.getPassword())) {
-            return new Response("401", "Invalid credentials", null);
-        }
-
-        return new Response("200", "Login successful",null);
     }
 
 }
