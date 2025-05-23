@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 
             if (dto.getName() != null) user.setName(dto.getName());
             if (dto.getEmail() != null && !dto.getEmail().equals(user.getEmail())) {
-                // Check email uniqueness for update
+
                 if (userRepository.findByEmail(dto.getEmail()).isPresent()) {
                     return new Response("409", "Email already in use by another user", null);
                 }
